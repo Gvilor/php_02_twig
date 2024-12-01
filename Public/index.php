@@ -69,7 +69,7 @@
             require "../views/main.php";
         } elseif (preg_match("#^/glamping#", $url)) {
             require "../views/glamping.php";
-        } elseif ($url == "/telegramm") {
+        } elseif (preg_match("#^/telegramm#", $url)) {
             require "../views/telegramm.php";
         }
 

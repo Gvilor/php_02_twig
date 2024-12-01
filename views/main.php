@@ -3,7 +3,7 @@
         <div class="btn-group">
             <a class="btn btn-primary active" aria-current="page" href="/glamping">Глэмпинг</a>
             <a class="btn btn-primary" href="/glamping_info">Описание</a>
-            <a class="btn btn-primary">Картинка</a>
+            <a class="btn btn-primary" href="/glamping_image">Картинка</a>
         </div>
     </li>
     <li class="list-group-item">
@@ -21,6 +21,10 @@
     $url = $_SERVER["REQUEST_URI"];
     if ($url == "/glamping") {
         require "../views/glamping.php";
+    } elseif ($url == "/glamping_info") {
+        require "../views/glamping_info.php";
+    } elseif ($url == "/glamping_image") {
+        require "../views/glamping_image.php";
     } elseif ($url == "/telegramm") {
         require "../views/telegramm.php";
     } 
