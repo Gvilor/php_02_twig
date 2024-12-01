@@ -67,7 +67,7 @@
 
         if ($url == "/main") {
             require "../views/main.php";
-        } elseif ($url == "/glamping") {
+        } elseif (preg_match("#^/glamping#", $url)) {
             require "../views/glamping.php";
         } elseif ($url == "/telegramm") {
             require "../views/telegramm.php";
