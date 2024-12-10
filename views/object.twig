@@ -1,0 +1,19 @@
+{% extends "__layout.twig" %}
+
+{% block content %}
+
+
+<h3>Здесь я вам расскажу о том что такое {{title}} и почему это хороший способ заработка.</h3> <br>
+
+<div class="btn-group">
+    <a class="btn btn-primary {{ is_info ? 'active' }}" href="/{{url_title}}/info">Описание</a>
+    <a class="btn btn-primary {{ is_image ? 'active' }}" href="/{{url_title}}/image">Картинки</a>
+</div>
+
+<ul class="list-group mt-4">
+    <li class="list-group-item">
+        {% block objectContent %}{% endblock %}
+    </li>
+</ul>
+
+{% endblock %}

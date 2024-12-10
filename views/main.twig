@@ -1,0 +1,19 @@
+ {% extends "__layout.twig" %} 
+
+ {% block content %}
+
+ {% for item in menu_items %}
+    <ul class="list-group">
+    <li class="list-group-item">
+        <div class="btn-group">
+            <a class="btn btn-primary active" aria-current="page" href="/{{item.url_title}}">{{item.title}}</a>
+            <a class="btn btn-primary" href="/{{item.url_title}}/info">Описание</a>
+            <a class="btn btn-primary" href="/{{item.url_title}}/image">Картинка</a>
+        </div>
+    </li>
+</ul>
+ {% endfor %}
+
+ 
+
+ {% endblock %}
