@@ -1,0 +1,28 @@
+{% extends '__layout.twig' %}
+{% block content %}
+<form action="/way/{{ object.id }}/edit" method="POST" enctype="multipart/form-data" class="row mb-3">
+    <div class="mb-3">
+        <label for="title" class="form-label">Название</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{ object.title }}">
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Описание</label>
+        <input type="text" class="form-control" id="description" name="description" value="{{ object.description }}">
+    </div>
+    <div class="mb-3">
+        <label for="type" class="form-label">Тип</label>
+        <select class="form-control" id="type" name="type">
+            {% for type in types %}
+                <option value="{{ type.type }}" {% if type.type == object.type %}selected{% endif %}>{{ type.type }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Выберите изображение</label>
+        <input class="form-control" type="file" id="formFile" name="image">
+    </div>
+    <div class="col-12 text-end">
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </div>
+</form>
+{% endblock %}

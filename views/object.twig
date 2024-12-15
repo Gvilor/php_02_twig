@@ -1,19 +1,22 @@
 {% extends "__layout.twig" %}
-
+{% import "macros.twig" as buttons %}
 {% block content %}
 
 
-<h3>Здесь я вам расскажу о том что такое {{title}} и почему это хороший способ заработка.</h3> <br>
+	<h3>{{object.description}}</h3>
+	<br>
 
-<div class="btn-group">
-    <a class="btn btn-primary {{ is_info ? 'active' }}" href="/{{url_title}}/info">Описание</a>
-    <a class="btn btn-primary {{ is_image ? 'active' }}" href="/{{url_title}}/image">Картинки</a>
-</div>
+	<div class="btn-group">
+		{# Кнопка для информации #}
+		{{ buttons.btn("Описание", '/way/' ~ object.id ~ '?show=info', true, "info") }}
 
-<ul class="list-group mt-4">
-    <li class="list-group-item">
-        {% block objectContent %}{% endblock %}
-    </li>
-</ul>
+		{# Кнопка для изображения #}
+	{{ buttons.btn("Картинка", '/way/' ~ object.id ~ '?show=image', true, "info") }}
+	</div>
+
+		<ul class="list-group mt-4"> <li class="list-group-item">
+			{% block objectContent %}{% endblock %}
+		</li>
+	</ul>
 
 {% endblock %}

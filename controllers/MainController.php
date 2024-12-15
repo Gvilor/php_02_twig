@@ -1,7 +1,7 @@
 <?php
-require_once "TwigBaseController.php"; // импортим TwigBaseController
+require_once "BaseWayTwigController.php";
 
-class MainController extends TwigBaseController {
+class MainController extends BaseWayTwigController {
     public $template = "main.twig";
     public $title = "Главная";
 
@@ -9,14 +9,21 @@ class MainController extends TwigBaseController {
 
         $context = parent::getContext();
 
+
+        if (isset($_GET['type'])) {
+            $query = $this->pdo->prepare("SELECT * FROM way WHERE type = :type");
+            $query->bindValue("type", $_GET['type']);
+            $query->execute();
+        } else {
+            $query = $this->pdo->query("SELECT * FROM way");
+        }
+        
+
+        $context['way'] = $query->fetchAll();
+
         $context['menu_items'] = [
             [
-                "title" => "Глэмпинг",
-                "url_title" => "glamping"
-            ],
-            [
-                "title" => "Телеграм",
-                "url_title" => "telegramm"
+                
             ]
         ];
         return $context;

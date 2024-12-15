@@ -1,1 +1,0 @@
-<img style="height: 320px;" src="Images/glamping.jpg" alt="">

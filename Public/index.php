@@ -1,64 +1,34 @@
 <?php
 
 require_once '../vendor/autoload.php';
+require_once '../framework/autoload.php';
 require_once "../controllers/MainController.php";
-require_once "../controllers/GlampingController.php";
-require_once "../controllers/GlampingImageController.php";
-require_once "../controllers/GlampingInfoController.php";
-require_once "../controllers/TelegrammController.php";
-require_once "../controllers/TelegrammImageController.php";
-require_once "../controllers/TelegrammInfoController.php";
 require_once "../controllers/Controller404.php";
+require_once "../controllers/ObjectController.php";
+require_once "../controllers/SearchController.php";
+require_once "../controllers/WayObjectCreateController.php";
+require_once "../controllers/WayObjectDeleteController.php";
+require_once "../controllers/WayObjectUpdateController.php";
 $loader = new \Twig\Loader\FilesystemLoader('../views');
-$twig = new \Twig\Environment($loader);
+$twig = new \Twig\Environment($loader, [
+    "debug" => true // добавляем тут debug режим
+]);
+$twig->addExtension(new \Twig\Extension\DebugExtension());
 
-$url = $_SERVER["REQUEST_URI"];
-$title = "";
-$template = "";
-$context = [];
-$controller = null;
+$pdo = new PDO("mysql:host=localhost;dbname=ways_money;charset=utf8", "root", "");
 
-$controller = new Controller404($twig);
+$router = new Router($twig, $pdo);
+$router->add("/", MainController::class);
 
-if ($url == "/main") {
-    
-    $controller = new MainController($twig);
+$router->add("/way/(?P<id>\d+)", ObjectController::class);
 
-} elseif (preg_match("#^/glamping#", $url)) {
+$router->add("/search", SearchController::class);
 
-    $is_info = $url == '/glamping/info';
-    $is_image = $url == '/glamping/image';
-    
-    $controller = new GlampingController($twig);
+$router->add("/create_way", WayObjectCreateController::class);
 
-    if ($is_image) {
-        $controller = new GlampingImageController($twig);
-    } elseif ($is_info) {
-        $controller = new GlampingInfoController($twig);
-    }
+$router->add("/way/delete", WayObjectDeleteController::class);
 
-} elseif (preg_match("#^/telegramm#", $url)) {
-    
-    $is_info = $url == '/telegramm/info';
-    $is_image = $url == '/telegramm/image';
-
-    $controller = new TelegrammController($twig);
-
-    if ($is_image) {
-       $controller = new TelegrammImageController($twig);
-        
-    } elseif ($is_info) {
-        $controller = new TelegrammInfoController($twig);
-    }
-
-}
+$router->add("/way/(?P<id>\d+)/edit", WayObjectUpdateController::class);
 
 
-// $context['title'] = $title;
-
-// echo $twig->render($template, $context);
-
-
-if ($controller) {
-    $controller->get();
-}
+$router->get_or_default(Controller404::class);
